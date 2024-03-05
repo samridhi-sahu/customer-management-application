@@ -1,0 +1,56 @@
+syntax="proto3";
+
+package cms;
+
+import "schema.proto";
+
+option go_package = "./protobuf";
+
+message Customer{
+    string id = 1;
+    string name = 2;
+    string city = 3;
+}
+
+message NewCustomer{
+    string name = 1;
+    string city = 2;
+}
+
+message CustomerRequest{
+    string id = 1;
+}
+
+message Request{}
+
+message AllCustomersList{
+    repeated Customer customers = 1;
+}
+
+service CustomerServices{
+    rpc CreateCustomer (NewCustomer) returns (Customer){
+        option (graphql.schema) = {
+            mutation : "createCustomer"
+        };
+    };
+    rpc GetCustomer (CustomerRequest) returns (Customer){
+        option (graphql.schema) = {
+            query : "getCustomer"
+        };
+    };
+    rpc GetAllCustomers (Request) returns (AllCustomersList){
+        option (graphql.schema) = {
+            query : "getCustomers"
+        };
+    };
+    rpc UpdateCustomer (Customer) returns (Customer){
+        option (graphql.schema) = {
+            mutation : "updateCustomer"
+        };
+    };
+    rpc DeleteCustomer (CustomerRequest) returns (Customer){
+        option (graphql.schema) = {
+            mutation : "deleteCustomer"
+        };
+    };
+}

@@ -1,0 +1,23 @@
+services:
+  server:
+    image: my-server-image
+    ports:
+      - 8080:8080
+    networks:
+      - appnet
+  client:
+    image: my-client-image
+    ports:
+      - 4000:4000
+    networks:
+      - appnet
+  mysql:
+    image: my-sql-image
+    ports:
+      - 3307:3306
+    networks:
+      - appnet
+
+networks:
+  appnet:
+    driver: bridge
